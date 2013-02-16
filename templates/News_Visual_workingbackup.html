@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css"></link>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="/static/bootstrap/js/twitterjs.js"></script>
+    <script src="/static/bootstrap/js/bootstrap-tooltip.js"></script>
+    <script src="/static/bootstrap/js/bootstrap-popover.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function()
+        {
+
+            $(".leftpane").mouseover(function() {
+                var key = $(this).children("li").html();
+                var name = key.replace(" ","_");
+                var topic_id = "#news_" + name;
+                var topic_html = $(topic_id).html();
+                topic_html += '<div id="twitter_' + name + '"></div>';
+                $("#current_topic").html(topic_html);
+
+                $('#twitter_' + name ).twitterSearch({
+                    term:  key,
+                    title: 'Top News Tweets for ' + key,
+                    css: {
+                        img: {
+                            width: '30px', height: '30px'
+                        }
+                    }
+                });
+
+            });
+        });
+    </script>
+
+</head>
+
+    <title>TOP NEWS TRENDS</title>
+    <body>
+        <div class="top">
+            <h1><a href="#news">Top News</a><br>
+            </h1></div>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a class="brand" href="#">Home</a>
+                <ul class="nav">
+                    <li class="active"><a href="#">U.S News</a></li>
+                    <li><a href="Advanced">Advanced</a></li>
+                    <li><a href="About me">Business</a></li>
+                </ul>
+
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span3">
+                    <h2>In The News</h2>
+                    <h5><ol>
+                        {% for i in range(0, 5)%}
+                            <div class="leftpane" id="{{i}}">
+                            <li>{{key[i]}}</li>
+                            <!--<p class="muted">{{news_list[i][0][0]}}</p>-->
+                            </div>
+                        {%endfor%}
+                    </ol></h5>
+
+                </div>
+
+                 <div id="current_topic" class="span9"></div>
+            </div>
+         </div>
+
+    {% for j in range(0, 5)%}
+    <div id="news_{{key[j]|replace(' ', '_')}}" style="visibility:hidden">
+        <div><ol>
+            {% for story in news_list[j] %}
+                <li><a href="{{story[3]}}">{{story[0]}}</a></li>
+                <p><small>{{story[1]}} {{story[4]}}</small></p>
+                <p>{{story[2]}}</p>
+
+            {%endfor%}
+        </ol> </div>
+
+        <!--<div id="twitter_{{j}}"></div>-->
+    </div>
+   {%endfor%}
+ </body>
+
+</html>

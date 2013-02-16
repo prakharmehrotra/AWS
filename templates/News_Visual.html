@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css"></link>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="/static/bootstrap/js/twitterjs.js"></script>
+    <script src="/static/bootstrap/js/bootstrap-tooltip.js"></script>
+    <script src="/static/bootstrap/js/bootstrap-popover.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function()
+        {
+
+            $(".leftpane").mouseover(function() {
+                var key = $(this).children("li").html();
+                var name = key.replace(" ","_");
+                var name = name.replace("$","_");
+                var name = name.replace(".","_");
+                var topic_id = "#news_" + name;
+                var topic_html = $(topic_id).html();
+
+                var topic_html1 = '<div id="twitter_' + name + '"></div>';
+                $("#current_topic").html(topic_html);
+                $("#current_twitter").html(topic_html1);
+
+                $('#twitter_' + name ).twitterSearch({
+                    term:  key,
+                    title: 'Incoming Tweets for ' + key,
+                    css: {
+                        img: {
+                            width: '30px', height: '30px'
+                        }
+                    }
+                });
+
+            });
+        });
+    </script>
+
+
+
+</head>
+
+    <title>TOP NEWS TRENDS</title>
+    <body>
+            <div id="heading">
+                <h1>News Now</h1>
+                <hr size="2" noshade color="black">
+
+                <div id="date" class="date_div">
+                    <script>
+
+                        var dayName = new Array ("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
+
+                        var monName = new Array ("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+
+                        var currentTime = new Date();
+                        var Month = currentTime.getMonth();
+                        var year = currentTime.getFullYear();
+                        var day = currentTime.getDay();
+                        var date = currentTime.getDate();
+
+
+                        document.write(dayName[day]+', '+monName[Month]+' '+date+', '+year);
+                    </script>
+                </div>
+            </div>
+
+
+            <hr size="2" noshade color="black">
+
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span2">
+                    <h3>In The News</h3>
+                    <h5>
+                        {% for i in range(0, 7)%}
+                            <div class="leftpane" id="{{i}}">
+                            <li class="btn btn-primary">{{key[i]}}</li>
+                                <p></p>
+                            </div>
+                        {%endfor%}
+                    </h5>
+
+                </div>
+
+                 <div id="current_topic" class="span7"></div>
+                 <div id="current_twitter" class="span3"></div>
+
+            </div>
+         </div>
+
+    {% for j in range(0, 7)%}
+    <div id="news_{{key[j]|replace(' ', '_')|replace('$','_')|replace('.','_')}}" style="visibility:hidden" >
+        <div class="newscss"><ol>
+            {% for story in news_list[j] %}
+                <li><h4><a href="{{story[3]}}">{{story[0]}}</a></h4></li>
+                <p class="muted"><small>{{story[1]}} {{story[4]}}</small></p>
+                <p>{{story[2]}}</p>
+
+            {%endfor%}
+                <p font-weight="bold">Wikipedia: <a href="{{wiki[j]}}">{{key[j]}}</a></p>
+        </ol> </div>
+
+        <!--<div id="twitter_{{j}}"></div>-->
+    </div>
+   {%endfor%}
+ </body>
+
+</html>

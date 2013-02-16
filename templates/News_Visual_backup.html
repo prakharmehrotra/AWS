@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset=utf-8>
+
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css"></link>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="/static/bootstrap/js/twitterjs.js"></script>
+    <script src="/static/bootstrap/js/bootstrap-tooltip.js"></script>
+    <script src="/static/bootstrap/js/bootstrap-popover.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function()
+
+        {
+
+            /*$(".leftpane").mouseover(function() {
+                var name = $(this).children("li").html();
+                name = name.replace(" ","_");
+                //console.log(name);
+                var topic_id = "#news_" + name;
+
+                //console.log(topic_id);
+                //console.log($(topic_id));
+                var topic_html = $(topic_id).html();
+                //console.log(topic_html);
+                alert(topic_html);
+                $("#current_topic").html(topic_html);
+                //$("#current_topic").show();
+
+                //$("#news_" + name ).css('visibility','hidden');
+            });*/
+
+          //$(".leftpane").mouseout(function() { $("#news").css('visibility','hidden'); });
+          $(".leftpane").mouseover(function() { $("#twitter").css('visibility','visible'); });
+          $(".leftpane").mouseout(function() { $("#twitter").css('visibility','hidden'); });
+
+
+        });
+    </script>
+</head>
+
+    <title>TOP NEWS TRENDS</title>
+    <body>
+    <article>
+        <div class="top">
+            <h1><a href="#news">Top Trending News</a><br>
+            </h1></div>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a class="brand" href="#">Home</a>
+                <ul class="nav">
+                    <li class="active"><a href="#">U.S News</a></li>
+                    <li><a href="Advanced">Advanced</a></li>
+                    <li><a href="About me">Business</a></li>
+                </ul>
+
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span3">
+                    <h2>In The News</h2>
+                    <h5><ol>
+                        {% for i in range(0, 5)%}
+                            <div class="leftpane" id="{{i}}">
+                            <li>{{key[i]}}</li>
+                            <p class="muted">{{news_list[i][0][0]}}</p>
+                            </div>
+                        {%endfor%}
+                    </ol></h5>
+
+                </div>
+
+                    <div id="current_topic"  class="span9">
+                      <div id="twitter"></div>
+
+                <script>
+                    $('#twitter').twitterSearch({
+                        term:  '{{key[0]}}',
+                        title: 'Top News Tweets for {{key[0]}}',
+                        css: {
+                            img: {
+                                width: '30px', height: '30px'
+                            }
+                        }
+                    });</script>
+                    </div>
+
+            </div>
+
+         </div>
+
+
+
+    </article>
+
+
+
+        </div>
+
+
+
+    </body>
+
+</html>
