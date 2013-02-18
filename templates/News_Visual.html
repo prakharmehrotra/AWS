@@ -95,16 +95,17 @@
 
     {% for j in range(0, 7)%}
     <div id="news_{{key[j]|replace(' ', '_')|replace('$','_')|replace('.','_')}}" style="visibility:hidden" >
+
         <div class="newscss"><ol>
             {% for story in news_list[j] %}
                 <li><h4><a href="{{story[3]}}">{{story[0]}}</a></h4></li>
-                <p class="muted"><small>{{story[1]}} {{story[4]}}</small></p>
+                <small>{{story[1]}}</small> <small class="muted"> {{story[4]}}</small>
                 <p>{{story[2]}}</p>
 
             {%endfor%}
-                <p font-weight="bold">Wikipedia: <a href="{{wiki[j]}}">{{key[j]}}</a></p>
-        </ol> </div>
 
+        </ol> </div>
+        <p font-weight="bold">Wikipedia: <a href="{{wiki[j]}}">{{key[j]}}</a></p>
         <!--<div id="twitter_{{j}}"></div>-->
     </div>
    {%endfor%}
