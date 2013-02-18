@@ -43,7 +43,7 @@ def create_database(cur):
 
 
 
-# Function which retrieves the news feeds and stores in database
+# Function that retrieves the news feeds and stores in database
 def returnStories(url_p,cur,database):
     df_title = []
     df_link = []
