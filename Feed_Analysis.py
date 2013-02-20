@@ -194,7 +194,7 @@ def main():
     from collections import Counter
     lists = []
     for i in range(0, len(filter_words)):
-        lists.append(filter_words[i].replace(':','').replace("'",''))
+        lists.append(filter_words[i].replace(':','').replace("'",'').replace(',',''))
     bgrams = bigrams(lists)
     keywords_bgrams = Counter(bgrams).most_common(50)
     print 'Bigrams Keywords in Trending News\n', keywords_bgrams

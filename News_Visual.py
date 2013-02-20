@@ -9,6 +9,8 @@ from flask import jsonify
 from flask import url_for
 import MySQLdb
 import sys
+import urllib2
+from nltk import bigrams
 
 
 
@@ -82,10 +84,8 @@ def index():
             wiki.append(temp_wiki)
 
     #print "News List: ", news_list
-
     print '######## ENTERING UNIQUENESS TESTING#######'
-    print '### Len Key is', len(key)
-
+    print 'Key is:',key
     # comparing the uniqueness in the news
     u = []
     for m in range(0, len(key)-1):
@@ -94,27 +94,36 @@ def index():
                 print 'Match found at:', m, 'and at n = ', n
                 u.append(n)
 
-
-    print 'Key is:', key
-    print 'u is:', u
-    print 'Deleted word:'
     u.sort()
+    c = 0
     for i in range(0, len(u)):
         if (u[i] < 7):
-            c = 0
             j = key.pop(u[i]-c)
             news_list.pop(u[i]-c)
             wiki.pop(u[i]-c)
             print j
             c = c+1
 
-    return render_template('News_Visual.html', key = key, news_list = news_list, wiki = wiki)
+    # Creating a meaningful wiki recommendation
+    w = []
+    for i in range(0, 7):
+        url = wiki[i]
+        try:
+            req = urllib2.Request(url, headers={'User-Agent' : "Magic Browser"})
+            con = urllib2.urlopen(req)
+            w.append(url)
+        except urllib2.HTTPError, error:
+            try:
+                x = (key[i].lower()).split()
+                url = 'http://en.wikipedia.org/wiki/'+ x[0]+'_'+x[1]
+                req = urllib2.Request(url, headers={'User-Agent' : "Magic Browser"})
+                con = urllib2.urlopen(req)
+                w.append(url)
+            except urllib2.HTTPError,e:
+                w.append(url)
 
 
-
-@app.route('/Advanced')
-def anim():
-    return render_template('advanced.html')
+    return render_template('News_Visual.html', key = key, news_list = news_list, wiki = w)
 
 if __name__ == '__main__':
     # Bind to PORT if defined, otherwise default to 5000.

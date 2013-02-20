@@ -92,6 +92,19 @@ def main():
         returnStories(k,cur,database)
     file.close()
 
+# Changing the news source names (eg: LA times! to Los Angeles Times)
+    updated_source = ['Yahoo News','NPR','Los Angeles Times','New York Times','CNN','BBC News','CBS News',
+                      'ABC News','NBC News','CNBC','Chicago Tribune', 'Washington Examiner','U.S. News','The Washington Post', 'The Washington Post']
+
+    old_source = ['%Yahoo%','News','%Los Angeles Times%', '%NYT%', '%CNN%','%BBC%','%CBS%','%ABC%','%NBC%','%Top News and Analysis%','%chicagotribune.com%','%WashingtonExaminer.com%','%U.S. News%','%World News%','%National%']
+    for i in range(0, len(updated_source)):
+        p = updated_source[i]
+        q = old_source[i]
+        cur.execute('''update News set Source = ("%s") where Source like ("%s")''' %(p, q))
+    database.commit()
+
+
+
     database.close()
 if __name__ == "__main__":
     main()

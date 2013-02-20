@@ -42,12 +42,27 @@
 
 
 
+
 </head>
 
-    <title>TOP NEWS TRENDS</title>
+
+    <title>TOP NEWS</title>
     <body>
+    <div class="navbar navbar-inverse">
+        <div class="navbar-inner">
+            <ul class="nav">
+                <li ><a href="#">About News-Now</a></li>
+                <li><a href="#">Contact</a></li></ul>
+                <ul class="nav pull-right"><li class="headersettings">Insight Data Science</li>
+
+            </ul>
+
+        </div>
+    </div>
+
             <div id="heading">
                 <h1>News Now</h1>
+                <h4 class ="h4news"><i>Stay Current!</i></h4>
                 <hr size="2" noshade color="black">
 
                 <div id="date" class="date_div">
@@ -100,15 +115,25 @@
             {% for story in news_list[j] %}
                 <li><h4><a href="{{story[3]}}">{{story[0]}}</a></h4></li>
                 <small>{{story[1]}}</small> <small class="muted"> {{story[4]}}</small>
+                <a href="https://twitter.com/share" class="twitter-share-button" data-count="none" data-url={{ story[3] }}></a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){
+                    js=d.createElement(s);
+                    js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+
+
+
                 <p>{{story[2]}}</p>
 
             {%endfor%}
 
         </ol> </div>
         <p font-weight="bold">Wikipedia: <a href="{{wiki[j]}}">{{key[j]}}</a></p>
-        <!--<div id="twitter_{{j}}"></div>-->
+
     </div>
    {%endfor%}
  </body>
 
 </html>
+
+

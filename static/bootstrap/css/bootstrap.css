@@ -27,6 +27,12 @@
    -webkit-border-radius: 10px;
    }
 
+.headersettings{
+    font-size: 15px;
+    text-align: right;
+    color:#999999;
+    margin-top: 10px;
+}
 .title{
     color:#ffffff;
     margin: 0;
@@ -814,8 +820,15 @@ h3 {
 
 h4 {
   font-size: 17.5px;
+
 }
 
+.h4news{
+    font-size: 17.5px;
+    text-align: center;
+    color:#710909;
+    margin: 10px auto;
+}
 h5 {
   font-size: 14px;
 }
@@ -3382,6 +3395,8 @@ input[type="button"].btn-block {
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0044cc', GradientType=0);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    margin-left: 5px;
+    align: center;
 }
 
 .btn-primary:hover,
