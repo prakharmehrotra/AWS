@@ -52,13 +52,20 @@
         <div class="navbar-inner">
             <ul class="nav">
                 <li ><a href="#">About News-Now</a></li>
-                <li><a href="#">Contact</a></li></ul>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#" id="example" rel="popover" data-placement="bottom" data-content="The left pane shows the keywords for the most talked about news. Hover over them to read the related news from various sources and also see what people are saying about it on Twitter. Click on the help again to dismiss this info (Before it annoys you!)" data-original-title="Stay Current With News Now!">Help</a></li></ul>
+
                 <ul class="nav pull-right"><li class="headersettings">Insight Data Science</li>
 
             </ul>
 
         </div>
     </div>
+    <script>
+        $(function ()
+        { $("#example").popover();
+        });
+    </script>
 
             <div id="heading">
                 <h1>News Now</h1>
@@ -85,7 +92,13 @@
             </div>
 
 
-            <hr size="2" noshade color="black">
+
+
+
+
+
+
+    <hr size="2" noshade color="black">
 
         <div class="container-fluid">
             <div class="row-fluid">
