@@ -16,6 +16,7 @@ import sys
 import twitter
 import httplib
 import time
+import os
 
 def connect_db(host, user, passwd, db):
     try:
@@ -199,8 +200,6 @@ def main():
     f = open(word_file,'w')
     for i in final_keyword:
         f.write(str(i)+"\n")
-
-
 
 
 
