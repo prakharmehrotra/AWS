@@ -22,22 +22,22 @@ def connect_db(host, user, passwd, db):
         return False
 
 
-def choose_db():
-    db_file = open('database_name.txt')
-    db_show = db_file.readline()
-    print 'Database showing: ', db_show
+#def choose_db():
+#db_file = open('database_name.txt')
+#    db_show = db_file.readline()
+ #   print 'Database showing: ', db_show
 
     # MySQL connection variables
-    host = 'localhost'
-    user = 'root'
-    passwd = ''
-    db = db_show
+host = 'localhost'
+user = 'root'
+passwd = ''
+db = 'NewsFeed'
 
     # Connecting with database
-    database = connect_db(host, user, passwd, db)
-    cur = database.cursor()
+database = connect_db(host, user, passwd, db)
+cur = database.cursor()
 
-    return cur
+    #return cur
 
 app = Flask(__name__)
 
@@ -45,7 +45,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     print 'Inside Flask'
-    cur = choose_db()
+    #cur = choose_db()
     file = open('keywords.txt')
     f = file.readlines()
     keyword = []
@@ -62,6 +62,8 @@ def index():
         q = '%'+str(keyword[j][0])+' '+str(keyword[j][1])+'%'
         cur.execute('''select Distinct Title, Source, Summary, Link, Timestamp from News where Title like ("%s") group by Title limit 5''' %q)
         data_news = cur.fetchall()
+        #print q
+        #print len(data_news)
         if len(data_news) == 0:
             q1 = '%'+str(keyword[j][0])+'%'
             cur.execute('''select Distinct Title, Source, Summary, Link, Timestamp from News where Title like ("%s") group by Title limit 5''' %q1)
@@ -79,7 +81,6 @@ def index():
 
 
             key.append((str(keyword[j][0])+' '+str(keyword[j][1])).title())
-            #news_list.append( [[thing.replace('\x97',"'") for thing in item] for item in data_news])#   (data_news).replace('\x92',"'"))
             news_list.append(data_news)
             temp_wiki = wiki_url + (str(keyword[j][0])+'_'+str(keyword[j][1])).title()
             wiki.append(temp_wiki)
@@ -93,7 +94,7 @@ def index():
     for m in range(0, len(key)-1):
         for n in range(m+1, len(key)):
             if news_list[m][0][0] == news_list[n][0][0]:
-                #print 'Match found at:', m, 'and at n = ', n
+                print 'Match found at:', m, 'and at n = ', n
                 u.append(n)
 
     u.sort()
@@ -108,6 +109,8 @@ def index():
 
     # Creating a meaningful wiki recommendation
     w = []
+    #print wiki
+    #print key
     for i in range(0, 7):
         url = wiki[i]
         try:
@@ -127,6 +130,14 @@ def index():
 
     return render_template('News_Visual.html', key = key, news_list = news_list, wiki = w)
 
+
+@app.route('/Stats')
+def anim():
+    return render_template('Advanced.html')
+
+@app.route('/About')
+def about():
+    return render_template('About.html')
 
 if __name__ == '__main__':
     # Bind to PORT if defined, otherwise default to 5000.
